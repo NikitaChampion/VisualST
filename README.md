@@ -4,7 +4,8 @@ This repository contains an application for Android devices, showing usage of Se
 
 The following features are now implemented:
 | Build | Bad Time Complexity | Range querie | Modifying one element | Modifying segment |
-| ![equation](https://latex.codecogs.com/gif.latex?O(n)) | ------------------- | ------------------- |  ------------------- | 
+| ----- | ------------------- | ------------ | --------------------- | ----------------- |
+| ![equation](https://latex.codecogs.com/gif.latex?O(n)) |  |  |  | |
 
 This application was created during
 [&laquo;Higher school of economics&raquo;](https://www.hse.ru/ba/se/) project course.
