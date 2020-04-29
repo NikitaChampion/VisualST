@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <string name="app_name">VisualST</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="st">Segment Tree</string>
+
+    <string name="build">Build</string>
+    <string name="run">Run</string>
+    <string name="stop">Stop</string>
+    <string name="continue_">Continue</string>
+    <string name="generate">Generate</string>
+    <string name="clear">Clear</string>
+    <string name="check">Check</string>
+
+    <string name="array_elements">Number of elements in array:</string>
+
+    <string name="sec">1.25 sec</string>
+    
+    <string name="compute">Compute</string>
+    <string name="left">Left:</string>
+    <string name="right">Right:</string>
+
+    <!-- Generating groupoid -->
+    <string name="groupoid_elements">Number of elements in groupoid:</string>
+    <string name="generate_groupoid">Generate groupoid</string>
+
+    <string name="module">Module:</string>
+    <string name="function">Function:</string>
+    <string name="generating_set">Generating set:</string>
+
+    <!-- Checks -->
+    <string name="associative">Associativity test</string>
+    <string name="neutral">Neutral element</string>
+
+    <!-- Constants -->
+    <string name="zero">0</string>
+    <string name="module_const">10</string>
+    <string name="fun_const">X+Y</string>
+
+    <string name="nothingToShow">.....................</string>
+</resources>
