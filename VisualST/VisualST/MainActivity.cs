@@ -533,9 +533,7 @@ namespace VisualST
                 ShowMessage("Write right border");
                 return;
             }
-            int? ans = MyST.GetAns((int)left, (int)right);
-            if (ans != null)
-                ShowMessage(ans.ToString());
+            MyST.GetAns((int)left, (int)right, arrayT);
         }
     }
 }

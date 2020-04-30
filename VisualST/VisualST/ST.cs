@@ -20,11 +20,13 @@ namespace VisualST
 
         private Timer timer;
 
+        private Action TimerAction;
+
         private int timer_counter;
 
         private bool cleared;
 
-        private Action TimerAction;
+        private int answer;
 
         private int curSpeed;
         private int CurSpeed
@@ -92,10 +94,14 @@ namespace VisualST
             }
         }
 
+        private void UpdateColor()
+        {
+            for (int i = 1; i < txt_num.Length; ++i)
+                txt_num[i].SetBackgroundResource(Resource.Drawable.rectangle_gray);
+        }
+
         public void ClearTimer()
         {
-            cleared = true;
-
             if (timer != null)
             {
                 timer.Stop();
@@ -107,6 +113,7 @@ namespace VisualST
 
         public void Clear()
         {
+            cleared = true;
             ClearTimer();
             UpdateTextView();
         }
@@ -171,11 +178,9 @@ namespace VisualST
                     return;
                 }
             }
-            if (pos == timer_counter)
-            {
-                cleared = false;
-                timer.Stop();
-            }
+            ++timer_counter;
+            cleared = false;
+            timer.Stop();
         }
 
         public void Build(ArrayT arrayT)
@@ -228,31 +233,65 @@ namespace VisualST
             }
         }
 
-        public int? GetAns(int l, int r)
+        public void GetAns(int l, int r)
         {
-            if (l > r)
+            UpdateColor();
+
+            if (timer_counter < -1)
+                timer_counter = -1;
+
+            int pos = -1;
+            if (pos++ == timer_counter)
             {
-                MakeText("left > right");
-                return null;
+                ++timer_counter;
+                return;
             }
-            if (cleared)
-            {
-                MakeText("Firstly build Segment Tree");
-                return null;
-            }
-            int ans = monoid.neutral;
+
             l += N;
             r += N;
             while (l <= r)
             {
                 if (l % 2 == 1)
-                    ans = monoid.GetCayley(ans, numbers[l]);
+                    answer = monoid.GetCayley(answer, numbers[l]);
                 if (r % 2 == 0)
-                    ans = monoid.GetCayley(ans, numbers[r]);
+                    answer = monoid.GetCayley(answer, numbers[r]);
+
+                txt_num[l].SetBackgroundResource(Resource.Drawable.rectangle_purple);
+                txt_num[r].SetBackgroundResource(Resource.Drawable.rectangle_purple);
+                if (pos++ == timer_counter)
+                {
+                    ++timer_counter;
+                    return;
+                }
                 l = (l + 1) / 2;
                 r = (r - 1) / 2;
             }
-            return ans;
+            ++timer_counter;
+            timer.Stop();
+        }
+
+        public void GetAns(int l, int r, ArrayT arrayT)
+        {
+            if (l > r)
+            {
+                MakeText("left > right");
+                return;
+            }
+            if (cleared)
+            {
+                MakeText("Firstly build Segment Tree");
+                return;
+            }
+
+            ClearTimer();
+            UpdateColor();
+            arrayT.UpdateColor();
+
+            answer = monoid.neutral;
+            timer = new Timer(CurSpeed);
+            TimerAction = () => GetAns(l, r);
+            timer.Elapsed += (s, e) => GetAns(l, r);
+            timer.Start();
         }
 
         public void Update(int i, int x, Func<int, int, int> func)
