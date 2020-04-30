@@ -161,14 +161,18 @@ namespace VisualST
         private void ShowMessage(string text) =>
             Toast.MakeText(this, text, ToastLength.Long).Show();
 
+        public void LeftRightCl()
+        {
+            left = right = null;
+            FindViewById<EditText>(Resource.Id.left).Text = "";
+            FindViewById<EditText>(Resource.Id.right).Text = "";
+        }
+
         public void UpdateInfo()
         {
             TextView counter = FindViewById<TextView>(Resource.Id.number);
             counter.Text = monoid.Count.ToString();
 
-            left = right = null;
-            FindViewById<EditText>(Resource.Id.left).Text = "";
-            FindViewById<EditText>(Resource.Id.right).Text = "";
             arrayT.Clear();
             MyST.Clear();
         }
@@ -183,13 +187,15 @@ namespace VisualST
             UpdateInfo();
         }
 
-        private void NewFocus()
+        private void NewFocus(EditText edit)
         {
-            FindViewById<LinearLayout>(Resource.Id.mainLayout).RequestFocus();
+            //FindViewById<LinearLayout>(Resource.Id.focusedLayout).RequestFocus();
+
+            edit.ClearFocus();
 
             InputMethodManager inputManager = (InputMethodManager)GetSystemService(InputMethodService);
 
-            inputManager.HideSoftInputFromWindow(CurrentFocus.WindowToken, HideSoftInputFlags.NotAlways);
+            inputManager.HideSoftInputFromWindow(edit.WindowToken, HideSoftInputFlags.NotAlways);
         }
 
         /// <summary>
@@ -216,20 +222,24 @@ namespace VisualST
                 EditText arrayElements = sender as EditText;
                 e.Handled = true;
 
-                NewFocus();
+                NewFocus(arrayElements);
 
-                if (!int.TryParse(arrayElements.Text, out int x) || x <= 0 || x > 8)
+                if (!int.TryParse(arrayElements.Text, out int length) || length <= 0 || length > 8)
                 {
                     ShowMessage("Error in number of elements in array!");
                     arrayElements.Text = arrayT.Length.ToString();
                     return;
                 }
 
-                int length = int.Parse(arrayElements.Text);
+                if (length == arrayT.Length)
+                    return;
 
                 arrayT.UpdateN(length);
 
                 MyST.UpdateN(length);
+
+                LeftRightCl();
+
                 int pxx = MyST.N switch
                 {
                     1 => Resources.GetDimensionPixelSize(Resource.Dimension.text_width320),
@@ -296,7 +306,7 @@ namespace VisualST
                 EditText right_ = sender as EditText;
                 e.Handled = true;
 
-                NewFocus();
+                NewFocus(right_);
 
                 if (!int.TryParse(right_.Text, out int x) || x < 0 || x >= arrayT.Length)
                 {
@@ -381,7 +391,7 @@ namespace VisualST
                 EditText set = sender as EditText;
                 e.Handled = true;
 
-                NewFocus();
+                NewFocus(set);
 
                 string[] splitted = set.Text.Split(", ");
 
@@ -474,7 +484,6 @@ namespace VisualST
         private void Build(object sender, EventArgs e) =>
             MyST.Build(arrayT);
 
-        #region Methods
         /// <summary>
         /// Остановка алгоритма
         /// </summary>
@@ -506,7 +515,6 @@ namespace VisualST
         /// <param name="e"></param>
         private void Previous(object sender, EventArgs e) =>
             MyST.Previous();
-        #endregion
 
         /// <summary>
         /// Подсчёт функции на отрезке
@@ -517,12 +525,12 @@ namespace VisualST
         {
             if (left == null)
             {
-                ShowMessage("Left!!");
+                ShowMessage("Write left border");
                 return;
             }
             if (right == null)
             {
-                ShowMessage("Right!!");
+                ShowMessage("Write right border");
                 return;
             }
             int? ans = MyST.GetAns((int)left, (int)right);

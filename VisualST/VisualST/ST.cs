@@ -22,6 +22,10 @@ namespace VisualST
 
         private int timer_counter;
 
+        private bool cleared;
+
+        private Action TimerAction;
+
         private int curSpeed;
         private int CurSpeed
         {
@@ -56,6 +60,7 @@ namespace VisualST
             numbers = new int[2 * N];
 
             timer_counter = 0;
+            cleared = true;
         }
 
         public void UpdateN(int n)
@@ -78,14 +83,19 @@ namespace VisualST
         public void UpdateInterval(int curSpeed) =>
             CurSpeed = curSpeed;
 
-        private void UpdateColor()
+        private void UpdateTextView()
         {
             for (int i = 1; i < txt_num.Length; ++i)
+            {
+                txt_num[i].Text = "";
                 txt_num[i].SetBackgroundResource(Resource.Drawable.rectangle_gray);
+            }
         }
 
-        public void Clear()
+        public void ClearTimer()
         {
+            cleared = true;
+
             if (timer != null)
             {
                 timer.Stop();
@@ -93,11 +103,12 @@ namespace VisualST
                 timer = null;
             }
             timer_counter = 0;
-            for (int i = 1; i < txt_num.Length; ++i)
-            {
-                txt_num[i].Text = "";
-                txt_num[i].SetBackgroundResource(Resource.Drawable.rectangle_gray);
-            }
+        }
+
+        public void Clear()
+        {
+            ClearTimer();
+            UpdateTextView();
         }
 
         private void SetTriple(int id, int resid)
@@ -109,12 +120,17 @@ namespace VisualST
 
         private void Builder(ArrayT arrayT)
         {
+            cleared = true;
+            UpdateTextView();
+            arrayT.UpdateColor();
+
+            if (timer_counter < -1)
+                timer_counter = -1;
+
             int pos = -1;
             if (pos++ == timer_counter)
             {
                 ++timer_counter;
-                UpdateColor();
-                arrayT.UpdateColor();
                 return;
             }
             for (int i = 0; i < N; ++i)
@@ -129,8 +145,6 @@ namespace VisualST
                 if (pos++ == timer_counter)
                 {
                     ++timer_counter;
-                    UpdateColor();
-                    arrayT.UpdateColor();
 
                     if (i < n)
                     {
@@ -152,8 +166,6 @@ namespace VisualST
                 if (pos++ == timer_counter)
                 {
                     ++timer_counter;
-                    UpdateColor();
-                    arrayT.UpdateColor();
 
                     SetTriple(i, Resource.Drawable.rectangle_purple);
                     return;
@@ -161,37 +173,37 @@ namespace VisualST
             }
             if (pos == timer_counter)
             {
-                UpdateColor();
-                arrayT.UpdateColor();
+                cleared = false;
+                timer.Stop();
             }
         }
 
         public void Build(ArrayT arrayT)
         {
-            Clear();
-            arrayT.UpdateColor();
             if (arrayT.array == null)
             {
                 MakeText("Generate an array");
                 return;
             }
+
+            Clear();
+            arrayT.UpdateColor();
+
             timer = new Timer(CurSpeed);
+            TimerAction = () => Builder(arrayT);
             timer.Elapsed += (s, e) => Builder(arrayT);
             timer.Start();
         }
 
         public void Previous()
         {
-            if (timer == null)
-                return;
+            if (timer != null)
+            {
+                timer.Stop();
+                timer_counter -= 2;
 
-            timer.Stop();
-            if (timer_counter == 0)
-                return;
-
-            timer.AutoReset = false;
-            timer_counter -= 2;
-            timer.Start();
+                TimerAction();
+            }
         }
 
         public void Stop()
@@ -202,12 +214,8 @@ namespace VisualST
 
         public void Continue()
         {
-            if (timer != null) // сделать счетчик, обозначающий билд... (опционально)
-            {
-                timer.Stop();
-                timer.AutoReset = true;
+            if (timer != null)
                 timer.Start();
-            }
         }
 
         public void Next()
@@ -215,8 +223,8 @@ namespace VisualST
             if (timer != null)
             {
                 timer.Stop();
-                timer.AutoReset = false;
-                timer.Start();
+
+                TimerAction();
             }
         }
 
@@ -224,7 +232,12 @@ namespace VisualST
         {
             if (l > r)
             {
-                MakeText("left > right!");
+                MakeText("left > right");
+                return null;
+            }
+            if (cleared)
+            {
+                MakeText("Firstly build Segment Tree");
                 return null;
             }
             int ans = monoid.neutral;
