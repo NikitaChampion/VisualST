@@ -21,7 +21,7 @@ namespace VisualST
             this.arr = arr;
             this.monoid = monoid;
 
-            Clear();
+            array = null;
         }
 
         public void Generate()
@@ -52,8 +52,8 @@ namespace VisualST
 
         public void UpdateN(int length)
         {
-            Length = length;
             Clear();
+            Length = length;
 
             for (int i = 0; i < arr.Length; ++i)
             {

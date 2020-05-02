@@ -171,7 +171,7 @@ namespace VisualST
         }
 
         /// <summary>
-        /// Очистка позиций
+        /// Очистка позиций (при изменении длины)
         /// </summary>
         public void PositionsClear()
         {
@@ -181,20 +181,24 @@ namespace VisualST
             FindViewById<EditText>(Resource.Id.position).Text = "";
         }
 
-        public void UpdateInfo()
-        {
+        /// <summary>
+        /// Обновление значений:
+        ///     при генерации (длина моноида, скорее всего, изменится)
+        ///     при проверках (длина моноида может измениться (= 0))
+        /// </summary>
+        public void UpdateInfo() =>
             FindViewById<TextView>(Resource.Id.number).Text = monoid.Count.ToString();
 
-            arrayT.Clear();
-            MyST.Clear();
-        }
-
         /// <summary>
-        /// Очистка группоида (моноида)
+        /// Очистка группоида (моноида) (при задании параметров)
         /// </summary>
         private void GroupoidClear()
         {
             monoid.Clear();
+
+            // значения в массиве могут стать невалидными только после изменения одного из параметров группоида
+            arrayT.Clear();
+            MyST.Clear();
 
             UpdateInfo();
         }
