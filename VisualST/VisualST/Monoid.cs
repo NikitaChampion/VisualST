@@ -46,6 +46,8 @@ namespace VisualST
 
         public int GetCayley(int x, int y) => Cayley[x, y];
 
+        public bool Contains(int x) => groupoid.Contains(x);
+
         public void Generate(int[] generating_set, int p)
         {
             groupoid = new List<int>();

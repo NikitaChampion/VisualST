@@ -33,7 +33,14 @@ namespace VisualST
         // Порождающее множество моноида
         private int[] generating_set;
 
+        // Левая, правая граница подсчёта функции на отрезке
         private int? left, right;
+
+        // Позиция элемента для обновления
+        private int? position;
+
+        // На какое значение обновляется элемент
+        private int? x;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -71,63 +78,58 @@ namespace VisualST
             arr[6] = FindViewById<TextView>(Resource.Id.arr6);
             arr[7] = FindViewById<TextView>(Resource.Id.arr7);
 
-            Button generate = FindViewById<Button>(Resource.Id.generate);
-            generate.Click += Generate;
 
-            Button build = FindViewById<Button>(Resource.Id.build);
-            build.Click += Build;
-
-            TextView previous = FindViewById<TextView>(Resource.Id.previous);
-            previous.Click += Previous;
-
-            TextView stop = FindViewById<TextView>(Resource.Id.stop);
-            stop.Click += Stop;
-
-            TextView continue_ = FindViewById<TextView>(Resource.Id.continue_);
-            continue_.Click += Continue;
-
-            TextView next = FindViewById<TextView>(Resource.Id.next);
-            next.Click += Next;
+            FindViewById<SeekBar>(Resource.Id.SbDelay).ProgressChanged += HandleDelayAction;
 
 
-            EditText left_ = FindViewById<EditText>(Resource.Id.left);
-            left_.EditorAction += HandleLeftAction;
+            FindViewById<EditText>(Resource.Id.arrayElements).EditorAction += HandleArrElemAction;
 
-            EditText right_ = FindViewById<EditText>(Resource.Id.right);
-            right_.EditorAction += HandleRightAction;
+
+            FindViewById<Button>(Resource.Id.generate).Click += Generate;
+
+            FindViewById<Button>(Resource.Id.build).Click += Build;
+
+
+            FindViewById<TextView>(Resource.Id.previous).Click += Previous;
+
+            FindViewById<TextView>(Resource.Id.stop).Click += Stop;
+
+            FindViewById<TextView>(Resource.Id.continue_).Click += Continue;
+
+            FindViewById<TextView>(Resource.Id.next).Click += Next;
+
+
+            FindViewById<EditText>(Resource.Id.left).EditorAction += HandleLeftAction;
+
+            FindViewById<EditText>(Resource.Id.right).EditorAction += HandleRightAction;
             left = right = null;
 
-            Button compute = FindViewById<Button>(Resource.Id.compute);
-            compute.Click += Compute;
+            FindViewById<Button>(Resource.Id.compute).Click += Compute;
 
 
-            Button newGroupoid = FindViewById<Button>(Resource.Id.generate_groupoid);
-            newGroupoid.Click += GenerateGroupoid;
+            FindViewById<EditText>(Resource.Id.position).EditorAction += HandlePosAction;
+            position = null;
 
-            EditText module = FindViewById<EditText>(Resource.Id.module);
+            FindViewById<EditText>(Resource.Id.x).EditorAction += HandleXAction;
+            x = null;
+
+            FindViewById<Button>(Resource.Id.update).Click += Update;
+
+
+            FindViewById<Button>(Resource.Id.generate_groupoid).Click += GenerateGroupoid;
+
+            FindViewById<EditText>(Resource.Id.module).EditorAction += HandleModuleAction;
             p = 10;
-            module.EditorAction += HandleModuleAction;
 
-            EditText function = FindViewById<EditText>(Resource.Id.function);
+            FindViewById<EditText>(Resource.Id.operation).EditorAction += HandleOperationAction;
             operation = "X+Y";
-            function.EditorAction += HandleFunctionAction;
 
-            EditText set = FindViewById<EditText>(Resource.Id.generating_set);
+            FindViewById<EditText>(Resource.Id.generating_set).EditorAction += HandleSetAction;
             generating_set = new int[] { 1 };
-            set.EditorAction += HandleSetAction;
 
-            Button neutralCheck = FindViewById<Button>(Resource.Id.neutral);
-            neutralCheck.Click += NeutralCheck;
+            FindViewById<Button>(Resource.Id.neutral).Click += NeutralCheck;
 
-            Button associativityCheck = FindViewById<Button>(Resource.Id.associative);
-            associativityCheck.Click += AssociativityCheck;
-
-
-            EditText arrayElements = FindViewById<EditText>(Resource.Id.arrayElements);
-            arrayElements.EditorAction += HandleArrElemAction;
-
-            SeekBar SbDelay = FindViewById<SeekBar>(Resource.Id.SbDelay);
-            SbDelay.ProgressChanged += HandleDelayAction;
+            FindViewById<Button>(Resource.Id.associative).Click += AssociativityCheck;
 
             monoid = new Monoid();
             monoid.MakeText += ShowMessage;
@@ -161,11 +163,19 @@ namespace VisualST
         private void ShowMessage(string text) =>
             Toast.MakeText(this, text, ToastLength.Long).Show();
 
-        public void LeftRightCl()
+        private void ShowMessageCenter(string text)
         {
-            left = right = null;
+            Toast toast = Toast.MakeText(this, text, ToastLength.Long);
+            toast.SetGravity(GravityFlags.Center, 0, 0);
+            toast.Show();
+        }
+
+        public void PositionsClear()
+        {
+            position = left = right = null;
             FindViewById<EditText>(Resource.Id.left).Text = "";
             FindViewById<EditText>(Resource.Id.right).Text = "";
+            FindViewById<EditText>(Resource.Id.position).Text = "";
         }
 
         public void UpdateInfo()
@@ -189,7 +199,9 @@ namespace VisualST
 
         private void NewFocus(EditText edit)
         {
+            #region Прошлая версия
             //FindViewById<LinearLayout>(Resource.Id.focusedLayout).RequestFocus();
+            #endregion
 
             edit.ClearFocus();
 
@@ -238,7 +250,7 @@ namespace VisualST
 
                 MyST.UpdateN(length);
 
-                LeftRightCl();
+                PositionsClear();
 
                 int pxx = MyST.N switch
                 {
@@ -264,6 +276,7 @@ namespace VisualST
             }
         }
 
+        #region Подсчёт функции на отрезке
         /// <summary>
         /// Проверка и сохранение левой границы (после закрытия клавиатуры)
         /// </summary>
@@ -278,9 +291,7 @@ namespace VisualST
 
                 if (!int.TryParse(left_.Text, out int x) || x < 0 || x >= arrayT.Length)
                 {
-                    Toast toast = Toast.MakeText(this, "Error in left border!", ToastLength.Long);
-                    toast.SetGravity(GravityFlags.Center, 0, 0);
-                    toast.Show();
+                    ShowMessageCenter("Error in left border!");
                     if (left != null)
                         left_.Text = left.ToString();
                     else
@@ -288,7 +299,7 @@ namespace VisualST
                     return;
                 }
 
-                left = int.Parse(left_.Text);
+                left = x;
             }
         }
 
@@ -310,9 +321,7 @@ namespace VisualST
 
                 if (!int.TryParse(right_.Text, out int x) || x < 0 || x >= arrayT.Length)
                 {
-                    Toast toast = Toast.MakeText(this, "Error in right border!", ToastLength.Long);
-                    toast.SetGravity(GravityFlags.Center, 0, 0);
-                    toast.Show();
+                    ShowMessage("Error in number of elements in array!");
                     if (left != null)
                         right_.Text = right.ToString();
                     else
@@ -320,10 +329,69 @@ namespace VisualST
                     return;
                 }
 
-                right = int.Parse(right_.Text);
+                right = x;
+            }
+        }
+        #endregion
+
+        #region Обновление элемента
+        /// <summary>
+        /// Проверка и сохранение позиции элемента, который следует обновить (после закрытия клавиатуры)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void HandlePosAction(object sender, TextView.EditorActionEventArgs e)
+        {
+            e.Handled = false;
+            if (e.ActionId == ImeAction.Next)
+            {
+                EditText pos = sender as EditText;
+
+                if (!int.TryParse(pos.Text, out int x) || x < 0 || x >= arrayT.Length)
+                {
+                    ShowMessageCenter("Error in position!");
+                    if (pos != null)
+                        pos.Text = left.ToString();
+                    else
+                        pos.Text = "";
+                    return;
+                }
+
+                position = x;
             }
         }
 
+        /// <summary>
+        /// Проверка и сохранение константы, на которую следует обновить элемент (после закрытия клавиатуры)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void HandleXAction(object sender, TextView.EditorActionEventArgs e)
+        {
+            e.Handled = false;
+            if (e.ActionId == ImeAction.Done)
+            {
+                EditText x_ = sender as EditText;
+                e.Handled = true;
+
+                NewFocus(x_);
+
+                if (!int.TryParse(x_.Text, out int x) || x < 0 || x >= p)
+                {
+                    ShowMessageCenter("Error in position!");
+                    if (x_ != null)
+                        x_.Text = left.ToString();
+                    else
+                        x_.Text = "";
+                    return;
+                }
+
+                this.x = x;
+            }
+        }
+        #endregion
+
+        #region Параметры моноида
         /// <summary>
         /// Проверка и сохранение содержимого в ячейке модуля моноида (после закрытия клавиатуры)
         /// </summary>
@@ -338,14 +406,12 @@ namespace VisualST
 
                 if (!int.TryParse(module.Text, out int x) || x <= 0 || x > 250)
                 {
-                    Toast toast = Toast.MakeText(this, "Error in module!", ToastLength.Long);
-                    toast.SetGravity(GravityFlags.Center, 0, 0);
-                    toast.Show();
+                    ShowMessageCenter("Error in module!");
                     module.Text = p.ToString();
                     return;
                 }
 
-                p = int.Parse(module.Text);
+                p = x;
 
                 GroupoidClear();
             }
@@ -356,23 +422,21 @@ namespace VisualST
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void HandleFunctionAction(object sender, TextView.EditorActionEventArgs e)
+        private void HandleOperationAction(object sender, TextView.EditorActionEventArgs e)
         {
             e.Handled = false;
             if (e.ActionId == ImeAction.Next)
             {
-                EditText function = sender as EditText;
+                EditText operation_ = sender as EditText;
 
-                if (function.Text.Length == 0)
+                if (operation_.Text.Length == 0)
                 {
-                    Toast toast = Toast.MakeText(this, "Error in function!", ToastLength.Long);
-                    toast.SetGravity(GravityFlags.Center, 0, 0);
-                    toast.Show();
-                    function.Text = operation;
+                    ShowMessageCenter("Error in function!");
+                    operation_.Text = operation;
                     return;
                 }
 
-                operation = function.Text;
+                operation = operation_.Text;
 
                 GroupoidClear();
             }
@@ -412,6 +476,7 @@ namespace VisualST
                 GroupoidClear();
             }
         }
+        #endregion
 
         /// <summary>
         /// Функция
@@ -533,7 +598,27 @@ namespace VisualST
                 ShowMessage("Write right border");
                 return;
             }
-            MyST.GetAns((int)left, (int)right, arrayT);
+            MyST.GetAns((int)left, (int)right);
+        }
+
+        /// <summary>
+        /// Обновление элемента
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Update(object sender, EventArgs e) // update
+        {
+            if (position == null)
+            {
+                ShowMessage("Write position");
+                return;
+            }
+            if (x == null)
+            {
+                ShowMessage("Write element");
+                return;
+            }
+            MyST.Update((int)position, (int)x);
         }
     }
 }

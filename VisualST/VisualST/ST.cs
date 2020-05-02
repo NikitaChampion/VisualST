@@ -6,30 +6,30 @@ namespace VisualST
 {
     public class ST
     {
-        private int n;
+        private int n; // длина массива
 
-        public int N { get; private set; }
+        public int N { get; private set; } // следующая степень двойки n
 
-        private int[] numbers;
+        private int[] numbers; // массив ДО
 
-        private readonly TextView[] txt_num;
+        private readonly TextView[] txt_num; // TextView[]
 
-        private readonly Monoid monoid;
+        private readonly Monoid monoid; // моноид, функция ДО
 
-        public event Action<string> MakeText;
+        public event Action<string> MakeText; // отображение текста
 
-        private Timer timer;
+        private Timer timer; // таймер для отображения действий
 
-        private Action TimerAction;
+        private Action TimerAction; // метод timer-а (для кнопок Previous / Next)
 
-        private int timer_counter;
+        private int timer_counter; // текущее действие таймера
 
-        private bool cleared;
+        private bool cleared; // очищен ли TextView[]
 
-        private int answer;
+        private int answer; // ответ на отрезке
 
         private int curSpeed;
-        private int CurSpeed
+        private int CurSpeed // скорость анимации
         {
             get => curSpeed;
             set
@@ -40,7 +40,7 @@ namespace VisualST
             }
         }
 
-        private int Next(int x)
+        private int Next(int x) // следующая степень двойки, O(log(log(x)))
         {
             --x;
             x |= x >> 1;
@@ -100,7 +100,7 @@ namespace VisualST
                 txt_num[i].SetBackgroundResource(Resource.Drawable.rectangle_gray);
         }
 
-        public void ClearTimer()
+        private void ClearTimer()
         {
             if (timer != null)
             {
@@ -183,22 +183,63 @@ namespace VisualST
             timer.Stop();
         }
 
-        public void Build(ArrayT arrayT)
+        private void GetAnswer(int l, int r)
         {
-            if (arrayT.array == null)
+            UpdateColor();
+
+            if (timer_counter < -1)
+                timer_counter = -1;
+
+            int pos = -1;
+            if (pos++ == timer_counter)
             {
-                MakeText("Generate an array");
+                ++timer_counter;
                 return;
             }
 
-            Clear();
-            arrayT.UpdateColor();
+            l += N;
+            r += N;
+            while (l <= r)
+            {
+                if (l % 2 == 1)
+                {
+                    answer = monoid.GetCayley(answer, numbers[l]);
+                    txt_num[l].SetBackgroundResource(Resource.Drawable.rectangle_red);
+                }
+                else
+                    txt_num[l].SetBackgroundResource(Resource.Drawable.rectangle_purple);
 
-            timer = new Timer(CurSpeed);
-            TimerAction = () => Builder(arrayT);
-            timer.Elapsed += (s, e) => Builder(arrayT);
-            timer.Start();
+                if (r % 2 == 0)
+                {
+                    answer = monoid.GetCayley(answer, numbers[r]);
+                    txt_num[r].SetBackgroundResource(Resource.Drawable.rectangle_red);
+                }
+                else
+                    txt_num[r].SetBackgroundResource(Resource.Drawable.rectangle_purple);
+
+                if (pos++ == timer_counter)
+                {
+                    ++timer_counter;
+                    return;
+                }
+                l = (l + 1) / 2;
+                r = (r - 1) / 2;
+            }
+            ++timer_counter;
+            timer.Stop();
         }
+
+        public void Updater(int i, int x)
+        {
+            i += N;
+            numbers[i] = x;
+            txt_num[i].Text = numbers[i].ToString();
+            while ((i /= 2) != 0)
+            {
+                numbers[i] = monoid.GetCayley(numbers[2 * i], numbers[2 * i + 1]);
+                txt_num[i].Text = numbers[i].ToString();
+            }
+        } // пока без понятия
 
         public void Previous()
         {
@@ -233,44 +274,24 @@ namespace VisualST
             }
         }
 
-        public void GetAns(int l, int r)
+        public void Build(ArrayT arrayT)
         {
-            UpdateColor();
-
-            if (timer_counter < -1)
-                timer_counter = -1;
-
-            int pos = -1;
-            if (pos++ == timer_counter)
+            if (arrayT.array == null)
             {
-                ++timer_counter;
+                MakeText("Generate an array");
                 return;
             }
 
-            l += N;
-            r += N;
-            while (l <= r)
-            {
-                if (l % 2 == 1)
-                    answer = monoid.GetCayley(answer, numbers[l]);
-                if (r % 2 == 0)
-                    answer = monoid.GetCayley(answer, numbers[r]);
+            Clear();
+            arrayT.UpdateColor();
 
-                txt_num[l].SetBackgroundResource(Resource.Drawable.rectangle_purple);
-                txt_num[r].SetBackgroundResource(Resource.Drawable.rectangle_purple);
-                if (pos++ == timer_counter)
-                {
-                    ++timer_counter;
-                    return;
-                }
-                l = (l + 1) / 2;
-                r = (r - 1) / 2;
-            }
-            ++timer_counter;
-            timer.Stop();
+            timer = new Timer(CurSpeed);
+            TimerAction = () => Builder(arrayT);
+            timer.Elapsed += (s, e) => Builder(arrayT);
+            timer.Start();
         }
 
-        public void GetAns(int l, int r, ArrayT arrayT)
+        public void GetAns(int l, int r)
         {
             if (l > r)
             {
@@ -285,23 +306,34 @@ namespace VisualST
 
             ClearTimer();
             UpdateColor();
-            arrayT.UpdateColor();
 
             answer = monoid.neutral;
             timer = new Timer(CurSpeed);
-            TimerAction = () => GetAns(l, r);
-            timer.Elapsed += (s, e) => GetAns(l, r);
+            TimerAction = () => GetAnswer(l, r);
+            timer.Elapsed += (s, e) => GetAnswer(l, r);
             timer.Start();
         }
 
-        public void Update(int i, int x, Func<int, int, int> func)
+        public void Update(int i, int x) // проверка на полное обновление элемента нужна еще, /*, Func<int, int, int> func можно добавить еще*/
         {
-            i += N;
-            numbers[i] = func(numbers[i], x);
-            while ((i /= 2) != 0)
+            if (cleared)
             {
-                numbers[i] = monoid.GetCayley(numbers[2 * i], numbers[2 * i + 1]);
+                MakeText("Firstly build Segment Tree");
+                return;
             }
+            if (!monoid.Contains(x))
+            {
+                MakeText($"{x} is not in monoid!");
+                return;
+            }
+
+            ClearTimer();
+            UpdateColor();
+
+            timer = new Timer(CurSpeed);
+            TimerAction = () => Updater(i, x);
+            timer.Elapsed += (s, e) => Updater(i, x);
+            timer.Start();
         }
     }
 }

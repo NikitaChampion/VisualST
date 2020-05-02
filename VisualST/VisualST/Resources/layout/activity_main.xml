@@ -293,33 +293,53 @@
 
 			</LinearLayout>
 
-            <LinearLayout
+			<LinearLayout
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
-				android:layout_marginTop="10dp"
+				android:layout_marginTop="20dp"
 				android:orientation="horizontal"
-				android:gravity="center">
-                
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/margin16"
-                    android:layout_marginRight="@dimen/margin16">
+				android:gravity="left">
 
-                    <!-- Длина 1, android:singleLine="true" по умолчанию-->
-                    <EditText
-                        android:id="@+id/arrayElements"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/array_elements"
-                        android:maxLines="1"
-                        android:lines="1"
-                        android:maxLength="1"
-                        android:inputType="number"
-                        android:imeOptions="actionDone" />
-                    
-                </android.support.design.widget.TextInputLayout>
-                
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginLeft="20dp"
+					android:text="Elements:"
+					android:textSize="23sp" />
+
+				<EditText
+					android:id="@+id/arrayElements"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:hint="@string/array_elements"
+					android:maxLines="1"
+					android:lines="1"
+					android:maxLength="1"
+					android:inputType="number"
+					android:imeOptions="actionDone"
+					android:gravity="center" />
+
+				<TextView
+					android:id="@+id/neutral_elem"
+					android:layout_width="@dimen/text_width40"
+					android:layout_height="@dimen/tv_height"
+					android:layout_marginLeft="20dp"
+					android:background="@drawable/rectangle_white"
+					android:gravity="center"
+					android:textColor="@android:color/black"
+					android:textSize="@dimen/text_size" />
+
+				<TextView
+					android:id="@+id/answer"
+					android:layout_width="@dimen/text_width40"
+					android:layout_height="@dimen/tv_height"
+					android:layout_marginLeft="20dp"
+					android:layout_marginRight="20dp"
+					android:background="@drawable/rectangle_white"
+					android:gravity="center"
+					android:textColor="@android:color/black"
+					android:textSize="@dimen/text_size" />
+
 			</LinearLayout>
 
 			<TextView
@@ -485,6 +505,68 @@
 					android:textSize="22sp" />
 
 			</LinearLayout>
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:layout_marginTop="@dimen/margin15"
+				android:orientation="horizontal"
+				android:gravity="center">
+
+			    <TextView
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin16"
+				    android:text="a("
+				    android:textSize="30sp" />
+
+				<EditText
+					android:id="@+id/position"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:hint="@string/i"
+					android:maxLines="1"
+					android:lines="1"
+					android:maxLength="1"
+					android:inputType="number"
+					android:imeOptions="actionNext"
+					android:gravity="center" />
+
+			    <TextView
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:text=") ="
+				    android:textSize="30sp" />
+
+				<EditText
+					android:id="@+id/x"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginLeft="10dp"
+					android:hint="@string/x"
+					android:maxLines="1"
+					android:lines="1"
+					android:maxLength="3"
+					android:inputType="number"
+					android:imeOptions="actionDone"
+					android:gravity="center" />
+
+				<Button
+					android:id="@+id/update"
+					style="@android:style/Widget.Holo.Light.Button.Toggle"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginLeft="20dp"
+					android:layout_marginRight="20dp"
+					android:paddingLeft="24dp"
+					android:paddingRight="24dp"
+					android:background="@drawable/button_shape"
+					android:gravity="center"
+					android:text="@string/update"
+					android:textColor="@android:color/white"
+					android:textSize="22sp" />
+
+			</LinearLayout>
             
             <LinearLayout
 				android:layout_width="match_parent"
@@ -569,10 +651,10 @@
 					android:layout_weight="0.8">
 
                     <EditText
-                        android:id="@+id/function"
+                        android:id="@+id/operation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/function"
+                        android:hint="@string/operation"
                         android:maxLines="1"
                         android:lines="1"
                         android:inputType="text"

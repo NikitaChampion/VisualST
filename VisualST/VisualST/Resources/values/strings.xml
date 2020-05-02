@@ -13,7 +13,8 @@
     <string name="clear">Clear</string>
     <string name="check">Check</string>
 
-    <string name="array_elements">Number of elements in array:</string>
+    <!-- Number of elements in array -->
+    <string name="array_elements">n</string>
 
     <string name="sec">1.25 sec</string>
     
@@ -21,12 +22,16 @@
     <string name="left">Left:</string>
     <string name="right">Right:</string>
 
+    <string name="update">Update</string>
+    <string name="i">I</string>
+    <string name="x">X</string>
+
     <!-- Generating groupoid -->
     <string name="groupoid_elements">Number of elements in groupoid:</string>
     <string name="generate_groupoid">Generate groupoid</string>
 
     <string name="module">Module:</string>
-    <string name="function">Function:</string>
+    <string name="operation">Operation:</string>
     <string name="generating_set">Generating set:</string>
 
     <!-- Checks -->
