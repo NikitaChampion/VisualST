@@ -12,6 +12,8 @@ namespace VisualST
 
         private int[] numbers; // массив ДО
 
+        private int[] saved; // сохранённый массив
+
         private readonly TextView[] txt_num; // TextView[]
 
         private readonly Monoid monoid; // моноид, функция ДО
@@ -27,6 +29,8 @@ namespace VisualST
         private bool cleared; // очищен ли TextView[]
 
         private int answer; // ответ на отрезке
+
+        private bool save; // нужно ли присваивать текущему массиву сохранённый
 
         private int curSpeed;
         private int CurSpeed // скорость анимации
@@ -63,13 +67,18 @@ namespace VisualST
 
             timer_counter = 0;
             cleared = true;
+            save = false;
+            saved = null;
         }
 
         public void UpdateN(int n)
         {
+            Clear();
+
             this.n = n;
             N = Next(n);
             numbers = new int[2 * N];
+            saved = null;
 
             for (int i = 1; i < txt_num.Length; ++i)
             {
@@ -78,8 +87,6 @@ namespace VisualST
                 else
                     txt_num[i].Visibility = Android.Views.ViewStates.Invisible;
             }
-
-            Clear();
         }
 
         public void UpdateInterval(int curSpeed) =>
@@ -107,6 +114,11 @@ namespace VisualST
                 timer.Stop();
                 timer.Dispose();
                 timer = null;
+            }
+            if (save)
+            {
+                Array.Copy(saved, numbers, saved.Length);
+                save = false;
             }
             timer_counter = 0;
         }
@@ -231,15 +243,48 @@ namespace VisualST
 
         public void Updater(int i, int x)
         {
+            Array.Copy(saved, numbers, saved.Length);
+
+            for (int j = 1; j < txt_num.Length; ++j)
+            {
+                txt_num[j].Text = numbers[j].ToString();
+            }
+            UpdateColor();
+
+            if (timer_counter < -1)
+                timer_counter = -1;
+
+            int pos = -1;
+            if (pos++ == timer_counter)
+            {
+                ++timer_counter;
+                return;
+            }
+
             i += N;
             numbers[i] = x;
             txt_num[i].Text = numbers[i].ToString();
+            txt_num[i].SetBackgroundResource(Resource.Drawable.rectangle_purple);
+            if (pos++ == timer_counter)
+            {
+                ++timer_counter;
+                return;
+            }
             while ((i /= 2) != 0)
             {
                 numbers[i] = monoid.GetCayley(numbers[2 * i], numbers[2 * i + 1]);
                 txt_num[i].Text = numbers[i].ToString();
+                txt_num[i].SetBackgroundResource(Resource.Drawable.rectangle_purple);
+                if (pos++ == timer_counter)
+                {
+                    ++timer_counter;
+                    return;
+                }
             }
-        } // пока без понятия
+            save = false;
+            ++timer_counter;
+            timer.Stop();
+        }
 
         public void Previous()
         {
@@ -329,6 +374,10 @@ namespace VisualST
 
             ClearTimer();
             UpdateColor();
+
+            saved = new int[numbers.Length];
+            Array.Copy(numbers, saved, numbers.Length);
+            save = true;
 
             timer = new Timer(CurSpeed);
             TimerAction = () => Updater(i, x);

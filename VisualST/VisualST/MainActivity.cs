@@ -40,7 +40,7 @@ namespace VisualST
         private int? position;
 
         // На какое значение обновляется элемент
-        private int? x;
+        private int? xx;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -111,7 +111,7 @@ namespace VisualST
             position = null;
 
             FindViewById<EditText>(Resource.Id.x).EditorAction += HandleXAction;
-            x = null;
+            xx = null;
 
             FindViewById<Button>(Resource.Id.update).Click += Update;
 
@@ -170,6 +170,9 @@ namespace VisualST
             toast.Show();
         }
 
+        /// <summary>
+        /// Очистка позиций
+        /// </summary>
         public void PositionsClear()
         {
             position = left = right = null;
@@ -180,8 +183,7 @@ namespace VisualST
 
         public void UpdateInfo()
         {
-            TextView counter = FindViewById<TextView>(Resource.Id.number);
-            counter.Text = monoid.Count.ToString();
+            FindViewById<TextView>(Resource.Id.number).Text = monoid.Count.ToString();
 
             arrayT.Clear();
             MyST.Clear();
@@ -199,11 +201,10 @@ namespace VisualST
 
         private void NewFocus(EditText edit)
         {
-            #region Прошлая версия
-            //FindViewById<LinearLayout>(Resource.Id.focusedLayout).RequestFocus();
-            #endregion
-
+            //#region Прошлая версия
             edit.ClearFocus();
+            FindViewById<RelativeLayout>(Resource.Id.focusedLayout).RequestFocus();
+            //#endregion
 
             InputMethodManager inputManager = (InputMethodManager)GetSystemService(InputMethodService);
 
@@ -260,19 +261,8 @@ namespace VisualST
                     8 => Resources.GetDimensionPixelSize(Resource.Dimension.text_width40),
                     _ => 0,
                 };
-                for (int i = 0; i < arrayT.arr.Length; ++i)
-                {
-                    if (i < MyST.N)
-                    {
-                        LinearLayout.LayoutParams paramsss = new LinearLayout.LayoutParams(pxx, arrayT.arr[i].Height);
-                        arrayT.arr[i].LayoutParameters = paramsss;
-                    }
-                    else
-                    {
-                        LinearLayout.LayoutParams paramsss = new LinearLayout.LayoutParams(0, arrayT.arr[i].Height);
-                        arrayT.arr[i].LayoutParameters = paramsss;
-                    }
-                }
+
+                arrayT.UpdateSize(MyST.N, pxx);
             }
         }
 
@@ -321,8 +311,8 @@ namespace VisualST
 
                 if (!int.TryParse(right_.Text, out int x) || x < 0 || x >= arrayT.Length)
                 {
-                    ShowMessage("Error in number of elements in array!");
-                    if (left != null)
+                    ShowMessage("Error in right border!");
+                    if (right != null)
                         right_.Text = right.ToString();
                     else
                         right_.Text = "";
@@ -350,8 +340,8 @@ namespace VisualST
                 if (!int.TryParse(pos.Text, out int x) || x < 0 || x >= arrayT.Length)
                 {
                     ShowMessageCenter("Error in position!");
-                    if (pos != null)
-                        pos.Text = left.ToString();
+                    if (position != null)
+                        pos.Text = position.ToString();
                     else
                         pos.Text = "";
                     return;
@@ -378,15 +368,15 @@ namespace VisualST
 
                 if (!int.TryParse(x_.Text, out int x) || x < 0 || x >= p)
                 {
-                    ShowMessageCenter("Error in position!");
-                    if (x_ != null)
-                        x_.Text = left.ToString();
+                    ShowMessage("Error in x!");
+                    if (xx != null)
+                        x_.Text = xx.ToString();
                     else
                         x_.Text = "";
                     return;
                 }
 
-                this.x = x;
+                xx = x;
             }
         }
         #endregion
@@ -586,7 +576,7 @@ namespace VisualST
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Compute(object sender, EventArgs e) // update
+        private void Compute(object sender, EventArgs e)
         {
             if (left == null)
             {
@@ -613,12 +603,12 @@ namespace VisualST
                 ShowMessage("Write position");
                 return;
             }
-            if (x == null)
+            if (xx == null)
             {
                 ShowMessage("Write element");
                 return;
             }
-            MyST.Update((int)position, (int)x);
+            MyST.Update((int)position, (int)xx);
         }
     }
 }

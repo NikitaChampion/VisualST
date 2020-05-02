@@ -70,6 +70,17 @@ namespace VisualST
                 arr[i].SetBackgroundResource(Resource.Drawable.rectangle_white);
         }
 
+        public void UpdateSize(int N, int pxx)
+        {
+            for (int i = 0; i < arr.Length; ++i)
+            {
+                if (i == N)
+                    pxx = 0; // для всех TextView после N-ой ширина = 0
+                LinearLayout.LayoutParams paramsss = new LinearLayout.LayoutParams(pxx, arr[i].Height);
+                arr[i].LayoutParameters = paramsss;
+            }
+        }
+
         public void Clear()
         {
             array = null;
