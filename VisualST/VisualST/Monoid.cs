@@ -32,7 +32,7 @@ namespace VisualST
         public TextView answer;
 
         // Хранит длину группоида (моноида)
-        public TextView number;
+        private readonly TextView number;
 
         public Monoid(TextView answer, TextView number)
         {
@@ -52,6 +52,12 @@ namespace VisualST
 
             answer.Text = "";
             UpdateSize();
+        }
+
+        public void ClearAnswer()
+        {
+            answer.Text = neutral.ToString();
+            answer.SetBackgroundResource(Resource.Drawable.rectangle_white);
         }
 
         public void UpdateSize() =>

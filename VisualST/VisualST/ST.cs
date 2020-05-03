@@ -136,14 +136,10 @@ namespace VisualST
 
         public void ShowSavedState()
         {
-            if (save)
+            for (int i = 1; i < numbers.Length; ++i)
             {
-                Array.Copy(saved, numbers, saved.Length); // numbers = saved
-                for (int i = 1; i < numbers.Length; ++i)
-                {
-                    txt_num[i].Text = numbers[i].ToString();
-                }
-                save = false;
+                numbers[i] = saved[i]; // numbers = saved
+                txt_num[i].Text = numbers[i].ToString();
             }
         }
 
@@ -152,6 +148,7 @@ namespace VisualST
             cleared = true;
             UpdateTextView();
             arrayT.UpdateColor();
+            monoid.ClearAnswer();
 
             if (timer_counter < -1)
                 timer_counter = -1;
@@ -183,6 +180,7 @@ namespace VisualST
                     else
                     {
                         txt_num[N + i].SetBackgroundResource(Resource.Drawable.rectangle_search_1);
+                        monoid.answer.SetBackgroundResource(Resource.Drawable.rectangle_search_1);
                     }
                     return;
                 }
@@ -208,6 +206,8 @@ namespace VisualST
         private void GetAnswer(int l, int r)
         {
             UpdateColor();
+            monoid.ClearAnswer();
+            answer = monoid.neutral;
 
             if (timer_counter < -1)
                 timer_counter = -1;
@@ -226,6 +226,9 @@ namespace VisualST
                 if (l % 2 == 1)
                 {
                     answer = monoid.GetCayley(answer, numbers[l]);
+                    monoid.answer.Text = answer.ToString();
+
+                    monoid.answer.SetBackgroundResource(Resource.Drawable.rectangle_purple);
                     txt_num[l].SetBackgroundResource(Resource.Drawable.rectangle_red);
                 }
                 else
@@ -234,6 +237,9 @@ namespace VisualST
                 if (r % 2 == 0)
                 {
                     answer = monoid.GetCayley(answer, numbers[r]);
+                    monoid.answer.Text = answer.ToString();
+
+                    monoid.answer.SetBackgroundResource(Resource.Drawable.rectangle_purple);
                     txt_num[r].SetBackgroundResource(Resource.Drawable.rectangle_red);
                 }
                 else
@@ -254,12 +260,8 @@ namespace VisualST
         public void Updater(int i, int x)
         {
             save = true;
-            Array.Copy(saved, numbers, saved.Length); // numbers = saved
 
-            for (int j = 1; j < txt_num.Length; ++j)
-            {
-                txt_num[j].Text = numbers[j].ToString();
-            }
+            ShowSavedState();
             UpdateColor();
 
             if (timer_counter < -1)
@@ -292,8 +294,8 @@ namespace VisualST
                     return;
                 }
             }
-            save = false;
             ++timer_counter;
+            save = false;
             timer.Stop();
         }
 
@@ -340,6 +342,9 @@ namespace VisualST
 
             Clear();
             arrayT.UpdateColor();
+            monoid.ClearAnswer();
+
+            save = false;
 
             timer = new Timer(CurSpeed);
             TimerAction = () => Builder(arrayT);
@@ -362,17 +367,21 @@ namespace VisualST
 
             ClearTimer();
             UpdateColor();
+            monoid.ClearAnswer();
 
-            ShowSavedState();
+            if (save)
+            {
+                ShowSavedState();
+                save = false;
+            }
 
-            answer = monoid.neutral;
             timer = new Timer(CurSpeed);
             TimerAction = () => GetAnswer(l, r);
             timer.Elapsed += (s, e) => GetAnswer(l, r);
             timer.Start();
         }
 
-        public void Update(int i, int x) // проверка на полное обновление элемента нужна еще, /*, Func<int, int, int> func можно добавить еще*/
+        public void Update(int i, int x) /* Func<int, int, int> func можно добавить ещё (на будущее) */
         {
             if (cleared)
             {
@@ -387,12 +396,17 @@ namespace VisualST
 
             ClearTimer();
             UpdateColor();
+            monoid.ClearAnswer();
 
-            ShowSavedState();
+            if (!save)
+            {
+                saved = new int[numbers.Length];
 
-            saved = new int[numbers.Length];
-            Array.Copy(numbers, saved, numbers.Length); // saved = numbers
-            save = true;
+                for (int j = 1; j < numbers.Length; ++j)
+                    saved[j] = numbers[j]; // saved = numbers
+
+                save = true;
+            }
 
             timer = new Timer(CurSpeed);
             TimerAction = () => Updater(i, x);
