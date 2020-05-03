@@ -134,6 +134,19 @@ namespace VisualST
             txt_num[2 * id + 1].SetBackgroundResource(resid);
         }
 
+        public void ShowSavedState()
+        {
+            if (save)
+            {
+                Array.Copy(saved, numbers, saved.Length); // numbers = saved
+                for (int i = 1; i < numbers.Length; ++i)
+                {
+                    txt_num[i].Text = numbers[i].ToString();
+                }
+                save = false;
+            }
+        }
+
         private void Builder(ArrayT arrayT)
         {
             cleared = true;
@@ -350,16 +363,7 @@ namespace VisualST
             ClearTimer();
             UpdateColor();
 
-
-            if (save)
-            {
-                Array.Copy(saved, numbers, saved.Length); // numbers = saved
-                for (int i = 1; i < numbers.Length; ++i)
-                {
-                    txt_num[i].Text = numbers[i].ToString();
-                }
-                save = false;
-            }
+            ShowSavedState();
 
             answer = monoid.neutral;
             timer = new Timer(CurSpeed);
@@ -384,16 +388,7 @@ namespace VisualST
             ClearTimer();
             UpdateColor();
 
-
-            if (save)
-            {
-                Array.Copy(saved, numbers, saved.Length); // numbers = saved
-                for (int j = 1; j < numbers.Length; ++j)
-                {
-                    txt_num[j].Text = numbers[j].ToString();
-                }
-                save = false;
-            }
+            ShowSavedState();
 
             saved = new int[numbers.Length];
             Array.Copy(numbers, saved, numbers.Length); // saved = numbers
