@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Android.Widget;
 
 namespace VisualST
 {
@@ -10,6 +11,7 @@ namespace VisualST
     {
         private static readonly Random rnd = new Random();
 
+        // Отображение текста
         public event Action<string> MakeText;
 
         // Функция
@@ -26,11 +28,20 @@ namespace VisualST
         // Таблица Кэли
         private int[,] Cayley;
 
-        public Monoid()
+        // Хранит значение нейтрального элемента (либо функции ST)
+        public TextView answer;
+
+        // Хранит длину группоида (моноида)
+        public TextView number;
+
+        public Monoid(TextView answer, TextView number)
         {
             Cayley = new int[0, 0];
             groupoid = new List<int>();
             neutralTest = associativityTest = false;
+
+            this.answer = answer;
+            this.number = number;
         }
 
         public void Clear()
@@ -38,7 +49,13 @@ namespace VisualST
             Cayley = new int[0, 0];
             groupoid.Clear();
             neutralTest = associativityTest = false;
+
+            answer.Text = "";
+            UpdateSize();
         }
+
+        public void UpdateSize() =>
+            number.Text = Count.ToString();
 
         public int Count { get => groupoid.Count; }
 
@@ -58,7 +75,7 @@ namespace VisualST
 
             for (int i = 0; i < generating_set.Length; ++i)
             {
-                if (generating_set[i] >= p || generating_set[i] < 0)
+                if (generating_set[i] >= p) // generating_set[i] < 0 проверяется сразу же
                 {
                     MakeText("Элемент порождающего множества некорректен");
 
@@ -125,6 +142,7 @@ namespace VisualST
             {
                 Cayley[tuple.Item1, tuple.Item2] = tuple.Item3;
             }
+            UpdateSize();
             /* суммарно:
              * время:  O(n^2 * m + p^2)
              * память: O(p^2)
@@ -183,6 +201,8 @@ namespace VisualST
                     neutral = groupoid[i];
                     MakeText($"Neutral element:{Environment.NewLine}{neutral}");
                     neutralTest = true;
+
+                    answer.Text = neutral.ToString();
                     return;
                 }
             }

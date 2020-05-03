@@ -78,6 +78,8 @@ namespace VisualST
             this.n = n;
             N = Next(n);
             numbers = new int[2 * N];
+
+            save = false;
             saved = null;
 
             for (int i = 1; i < txt_num.Length; ++i)
@@ -114,11 +116,6 @@ namespace VisualST
                 timer.Stop();
                 timer.Dispose();
                 timer = null;
-            }
-            if (save)
-            {
-                Array.Copy(saved, numbers, saved.Length);
-                save = false;
             }
             timer_counter = 0;
         }
@@ -243,7 +240,8 @@ namespace VisualST
 
         public void Updater(int i, int x)
         {
-            Array.Copy(saved, numbers, saved.Length);
+            save = true;
+            Array.Copy(saved, numbers, saved.Length); // numbers = saved
 
             for (int j = 1; j < txt_num.Length; ++j)
             {
@@ -352,6 +350,17 @@ namespace VisualST
             ClearTimer();
             UpdateColor();
 
+
+            if (save)
+            {
+                Array.Copy(saved, numbers, saved.Length); // numbers = saved
+                for (int i = 1; i < numbers.Length; ++i)
+                {
+                    txt_num[i].Text = numbers[i].ToString();
+                }
+                save = false;
+            }
+
             answer = monoid.neutral;
             timer = new Timer(CurSpeed);
             TimerAction = () => GetAnswer(l, r);
@@ -375,8 +384,19 @@ namespace VisualST
             ClearTimer();
             UpdateColor();
 
+
+            if (save)
+            {
+                Array.Copy(saved, numbers, saved.Length); // numbers = saved
+                for (int j = 1; j < numbers.Length; ++j)
+                {
+                    txt_num[j].Text = numbers[j].ToString();
+                }
+                save = false;
+            }
+
             saved = new int[numbers.Length];
-            Array.Copy(numbers, saved, numbers.Length);
+            Array.Copy(numbers, saved, numbers.Length); // saved = numbers
             save = true;
 
             timer = new Timer(CurSpeed);

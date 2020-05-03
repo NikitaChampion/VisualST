@@ -131,7 +131,10 @@ namespace VisualST
 
             FindViewById<Button>(Resource.Id.associative).Click += AssociativityCheck;
 
-            monoid = new Monoid();
+            TextView answer = FindViewById<TextView>(Resource.Id.answer);
+            TextView number = FindViewById<TextView>(Resource.Id.number);
+
+            monoid = new Monoid(answer, number);
             monoid.MakeText += ShowMessage;
             monoid.Fun += Fun;
 
@@ -182,14 +185,6 @@ namespace VisualST
         }
 
         /// <summary>
-        /// Обновление значений:
-        ///     при генерации (длина моноида, скорее всего, изменится)
-        ///     при проверках (длина моноида может измениться (= 0))
-        /// </summary>
-        public void UpdateInfo() =>
-            FindViewById<TextView>(Resource.Id.number).Text = monoid.Count.ToString();
-
-        /// <summary>
         /// Очистка группоида (моноида) (при задании параметров)
         /// </summary>
         private void GroupoidClear()
@@ -199,8 +194,6 @@ namespace VisualST
             // значения в массиве могут стать невалидными только после изменения одного из параметров группоида
             arrayT.Clear();
             MyST.Clear();
-
-            UpdateInfo();
         }
 
         private void NewFocus(EditText edit)
@@ -270,7 +263,7 @@ namespace VisualST
             }
         }
 
-        #region Подсчёт функции на отрезке
+        #region Левая и правая граница функции
         /// <summary>
         /// Проверка и сохранение левой границы (после закрытия клавиатуры)
         /// </summary>
@@ -477,7 +470,7 @@ namespace VisualST
         /// </summary>
         /// <param name="X"> Первый аргумент </param>
         /// <param name="Y"> Второй аргумент </param>
-        /// <returns></returns>
+        /// <returns> Результат применения функции к X и Y </returns>
         private int Fun(int X, int Y)
         {
             int answer = Eval.Execute<int>(operation, new { X, Y }) % p;
@@ -489,15 +482,13 @@ namespace VisualST
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="action"></param>
-        public void Generation(object sender, Action action)
+        public void Disable(object sender, Action action)
         {
-            ((Button)sender).Clickable = false;
+            ((Button)sender).Enabled = false;
 
             action();
 
-            UpdateInfo();
-
-            ((Button)sender).Clickable = true;
+            ((Button)sender).Enabled = true;
         }
 
         /// <summary>
@@ -506,7 +497,7 @@ namespace VisualST
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void GenerateGroupoid(object sender, EventArgs e) =>
-            Generation(sender, () => monoid.Generate(generating_set, p));
+            Disable(sender, () => monoid.Generate(generating_set, p));
 
         /// <summary>
         /// Проверка на ассоциативность
@@ -514,7 +505,7 @@ namespace VisualST
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void AssociativityCheck(object sender, EventArgs e) =>
-            Generation(sender, () => monoid.AssociativityCheck());
+            Disable(sender, () => monoid.AssociativityCheck());
 
         /// <summary>
         /// Проверка на наличие нейтрального элемента
@@ -522,7 +513,7 @@ namespace VisualST
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void NeutralCheck(object sender, EventArgs e) =>
-            Generation(sender, () => monoid.NeutralCheck());
+            Disable(sender, () => monoid.NeutralCheck());
 
         /// <summary>
         /// Генерация массива
