@@ -82,6 +82,7 @@ namespace VisualST
             FindViewById<SeekBar>(Resource.Id.SbDelay).ProgressChanged += HandleDelayAction;
 
 
+            FindViewById<EditText>(Resource.Id.arrayElements).Text = "8";
             FindViewById<EditText>(Resource.Id.arrayElements).EditorAction += HandleArrElemAction;
 
 
@@ -163,9 +164,17 @@ namespace VisualST
             }
         }
 
+        /// <summary>
+        /// Отображение сообщения
+        /// </summary>
+        /// <param name="text"> Текст для отображения </param>
         private void ShowMessage(string text) =>
             Toast.MakeText(this, text, ToastLength.Long).Show();
 
+        /// <summary>
+        /// Отображение сообщения в центре
+        /// </summary>
+        /// <param name="text"> Текст для отображения </param>
         private void ShowMessageCenter(string text)
         {
             Toast toast = Toast.MakeText(this, text, ToastLength.Long);

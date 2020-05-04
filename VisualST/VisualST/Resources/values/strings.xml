@@ -14,6 +14,7 @@
     <string name="check">Check</string>
 
     <!-- Number of elements in array -->
+    <string name="elements">Elements:</string>
     <string name="array_elements">n</string>
 
     <string name="sec">1.25 sec</string>
@@ -28,15 +29,16 @@
 
     <!-- Generating groupoid -->
     <string name="groupoid_elements">Number of elements in groupoid:</string>
-    <string name="generate_groupoid">Generate groupoid</string>
+    <string name="generate_groupoid">Groupoid</string>
 
     <string name="module">Module:</string>
     <string name="operation">Operation:</string>
     <string name="generating_set">Generating set:</string>
 
     <!-- Checks -->
-    <string name="associative">Associativity test</string>
-    <string name="neutral">Neutral element</string>
+    <string name="checks">Checks</string>
+    <string name="associative">Associativity</string>
+    <string name="neutral">Neutral</string>
 
     <!-- Constants -->
     <string name="zero">0</string>
