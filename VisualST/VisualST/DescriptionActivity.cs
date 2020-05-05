@@ -8,19 +8,28 @@ using Android.Views;
 using Android.Views.InputMethods;
 using Android.Widget;
 
+using Z.Expressions;
+
 namespace VisualST
 {
-    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar")]
-    public class SettingsActivity : AppCompatActivity
+    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
+    public class DescriptionActivity : AppCompatActivity
     {
+        private int[] drawables;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
-            SetContentView(Resource.Layout.activity_settings);
+            SetContentView(Resource.Layout.activity_description);
 
             Android.Support.V7.Widget.Toolbar toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
             SetSupportActionBar(toolbar);
+
+            drawables = new int[6];
+            //drawables[0] = Resource.Drawable
+
+            FindViewById<Button>(Resource.Id.next).Click += (s, e) => StartActivity(typeof(VisualizationActivity));
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)
@@ -33,9 +42,8 @@ namespace VisualST
         {
             switch (item.ItemId)
             {
-                case Resource.Id.action_settings:
-                    //Intent settings = new Intent(this, );
-                    StartActivity(typeof(SettingsActivity));
+                case Resource.Id.action_about:
+                    StartActivity(typeof(AboutActivity));
                     return true;
                 default:
                     return base.OnOptionsItemSelected(item);

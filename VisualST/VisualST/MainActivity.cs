@@ -15,8 +15,6 @@ namespace VisualST
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
     public class MainActivity : AppCompatActivity
     {
-        private int[] drawables;
-
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -26,10 +24,7 @@ namespace VisualST
             Android.Support.V7.Widget.Toolbar toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
             SetSupportActionBar(toolbar);
 
-            drawables = new int[6];
-            //drawables[0] = Resource.Drawable
-
-            FindViewById<Button>(Resource.Id.next).Click += (s, e) => StartActivity(typeof(VisualizationActivity));
+            FindViewById<Button>(Resource.Id.next).Click += (s, e) => StartActivity(typeof(DescriptionActivity));
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)
@@ -42,8 +37,8 @@ namespace VisualST
         {
             switch (item.ItemId)
             {
-                case Resource.Id.action_settings:
-                    StartActivity(typeof(SettingsActivity));
+                case Resource.Id.action_about:
+                    StartActivity(typeof(AboutActivity));
                     return true;
                 default:
                     return base.OnOptionsItemSelected(item);

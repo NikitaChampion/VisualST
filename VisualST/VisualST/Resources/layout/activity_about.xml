@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:local="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/toolbar">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
+                android:gravity="center"
+				android:text="@string/about_"
+				android:textColor="@android:color/black"
+				android:textSize="@dimen/text_size_norm" />
+            
+            <ImageView
+				android:contentDescription="Segment tree"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/ic_launcher_2" />
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="5dp"
+				android:gravity="center"
+				android:text="VisualST 1.1.0"
+                android:textStyle="bold"
+				android:textColor="@android:color/black"
+				android:textSize="@dimen/text_size_big" />
+
+            <TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="10dp"
+				android:layout_marginLeft="@dimen/margin15"
+				android:layout_marginRight="@dimen/margin15"
+				android:gravity="center"
+				android:text="Copyright © 2020"
+				android:textColor="@android:color/black"
+				android:textSize="@dimen/text_size" />
+
+            <TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="10dp"
+				android:layout_marginLeft="@dimen/margin15"
+				android:layout_marginRight="@dimen/margin15"
+				android:gravity="center"
+				android:text="Nikita Igumnov, student of HSE"
+				android:textColor="@android:color/black"
+				android:textSize="16sp" />
+            
+            <TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="5dp"
+				android:layout_marginLeft="@dimen/margin15"
+				android:layout_marginRight="@dimen/margin15"
+				android:gravity="center"
+				android:text="@nkigumnov – tg, inst, vk"
+				android:textColor="@android:color/black"
+				android:textSize="16sp" />
+
+		</LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

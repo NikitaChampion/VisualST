@@ -48,11 +48,13 @@
     <string name="module_const">10</string>
     <string name="fun_const">X+Y</string>
 
-    <!-- Settings -->
-    <string name="action_settings">Settings</string>
-    <string name="about_">About me</string>
+    <!-- About VisualST -->
+    <string name="action_about">About VisualST</string>
+    <string name="about_">About VisualST</string>
     <string name="about_me">I am Nikita Igumnov, student of the first grade. I made this application during «Higher school of economics» project course. It aims to make Segment Trees easier for programmers to understand.</string>
 
     <!-- Description -->
+    <string name="description">Description</string>
     <string name="nothingToShow">.....................</string>
+
 </resources>

@@ -156,9 +156,9 @@ namespace VisualST
         {
             switch (item.ItemId)
             {
-                case Resource.Id.action_settings:
+                case Resource.Id.action_about:
                     //Intent settings = new Intent(this, );
-                    StartActivity(typeof(SettingsActivity));
+                    StartActivity(typeof(AboutActivity));
                     return true;
                 default:
                     return base.OnOptionsItemSelected(item);
