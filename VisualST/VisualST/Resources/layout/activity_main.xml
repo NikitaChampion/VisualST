@@ -30,7 +30,7 @@
 				android:gravity="center"
 				android:text="@string/st"
 				android:textColor="@android:color/black"
-				android:textSize="22sp" />
+				android:textSize="@dimen/text_size_norm" />
 
             <LinearLayout
                 android:id="@+id/visualizer"
@@ -366,7 +366,7 @@
                 android:progressTint="@android:color/black"
                 android:thumbTint="@android:color/black"
 				android:min="100"
-				android:max="4000"
+				android:max="3000"
 				android:progress="1250" />
 
             <LinearLayout
@@ -434,7 +434,7 @@
 					android:gravity="center"
 					android:text="@string/generate"
 					android:textColor="@android:color/white"
-					android:textSize="22sp" />
+					android:textSize="@dimen/text_size_norm" />
 
 				<Button
 					android:id="@+id/build"
@@ -449,7 +449,7 @@
 					android:gravity="center"
 					android:text="@string/build"
 					android:textColor="@android:color/white"
-					android:textSize="22sp" />
+					android:textSize="@dimen/text_size_norm" />
 
 			</LinearLayout>
             
@@ -742,4 +742,5 @@
 		</LinearLayout>
 
     </ScrollView>
+
 </RelativeLayout>

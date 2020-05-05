@@ -5,6 +5,7 @@
 
     <string name="st">Segment Tree</string>
 
+
     <string name="build">Build</string>
     <string name="run">Run</string>
     <string name="stop">Stop</string>
@@ -44,6 +45,10 @@
     <string name="zero">0</string>
     <string name="module_const">10</string>
     <string name="fun_const">X+Y</string>
+
+    <!-- Settings -->
+    <string name="about">About me</string>
+    <string name="about_me">I am Nikita Igumnov, student of the first grade. I made this application during «Higher school of economics» project course. It aims to make Segment Trees easier for programmers to understand.</string>
 
     <string name="nothingToShow">.....................</string>
 </resources>

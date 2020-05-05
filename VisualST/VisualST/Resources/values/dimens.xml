@@ -8,5 +8,8 @@
     <dimen name="text_width80">80dp</dimen>
     <dimen name="text_width160">160dp</dimen>
     <dimen name="text_width320">320dp</dimen>
+
     <dimen name="text_size">18sp</dimen>
+    <dimen name="text_size_norm">22sp</dimen>
+    <dimen name="text_size_big">23sp</dimen>
 </resources>

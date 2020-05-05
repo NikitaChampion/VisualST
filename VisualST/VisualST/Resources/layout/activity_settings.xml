@@ -8,4 +8,39 @@
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/toolbar">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
+
+            <TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="35dp"
+				android:gravity="center"
+				android:text="@string/about"
+				android:textColor="@android:color/black"
+				android:textSize="@dimen/text_size_norm" />
+
+            <TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="10dp"
+				android:layout_marginLeft="@dimen/margin15"
+				android:layout_marginRight="@dimen/margin15"
+				android:gravity="center"
+				android:text="@string/about_me"
+				android:textColor="@android:color/black"
+				android:textSize="@dimen/text_size_norm" />
+
+		</LinearLayout>
+
+    </ScrollView>
+
 </RelativeLayout>

@@ -158,6 +158,7 @@ namespace VisualST
             {
                 case Resource.Id.action_settings:
                     //Intent settings = new Intent(this, );
+                    StartActivity(typeof(SettingsActivity));
                     return true;
                 default:
                     return base.OnOptionsItemSelected(item);

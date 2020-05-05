@@ -65,6 +65,7 @@
     <Compile Include="Monoid.cs" />
     <Compile Include="ArrayT.cs" />
     <Compile Include="ST.cs" />
+    <Compile Include="SettingsActivity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
