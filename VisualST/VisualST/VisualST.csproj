@@ -66,6 +66,7 @@
     <Compile Include="ArrayT.cs" />
     <Compile Include="ST.cs" />
     <Compile Include="SettingsActivity.cs" />
+    <Compile Include="VisualizationActivity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -151,6 +152,14 @@
       <Generator></Generator>
     </AndroidResource>
     <AndroidResource Include="Resources\drawable\rectangle_red.xml">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\activity_visualization.xml">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\segment_tree.png">
       <SubType></SubType>
       <Generator></Generator>
     </AndroidResource>

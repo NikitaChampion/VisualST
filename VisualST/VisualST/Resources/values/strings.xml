@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
+    <!-- Intro -->
+    <string name="first_intro">Visualization of Segment Trees</string>
     <string name="app_name">VisualST</string>
-    <string name="action_settings">Settings</string>
+    <string name="about">Welcome to VisualST! This application aims to make Segment Trees easier for programmers to understand. To continue click the button below.</string>
+    <string name="next">Next</string>
 
     <string name="st">Segment Tree</string>
-
 
     <string name="build">Build</string>
     <string name="run">Run</string>
@@ -47,8 +49,10 @@
     <string name="fun_const">X+Y</string>
 
     <!-- Settings -->
-    <string name="about">About me</string>
+    <string name="action_settings">Settings</string>
+    <string name="about_">About me</string>
     <string name="about_me">I am Nikita Igumnov, student of the first grade. I made this application during «Higher school of economics» project course. It aims to make Segment Trees easier for programmers to understand.</string>
 
+    <!-- Description -->
     <string name="nothingToShow">.....................</string>
 </resources>
