@@ -24,7 +24,7 @@ namespace VisualST
             Android.Support.V7.Widget.Toolbar toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
             SetSupportActionBar(toolbar);
 
-            FindViewById<Button>(Resource.Id.next).Click += (s, e) => StartActivity(typeof(DescriptionActivity));
+            FindViewById<Button>(Resource.Id.next).Click += (s, e) => StartActivity(typeof(VisualizationActivity));
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)

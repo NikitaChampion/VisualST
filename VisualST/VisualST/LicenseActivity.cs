@@ -8,21 +8,21 @@ using Android.Views;
 using Android.Views.InputMethods;
 using Android.Widget;
 
+using Z.Expressions;
+
 namespace VisualST
 {
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar")]
-    public class AboutActivity : AppCompatActivity
+    public class LicenseActivity : AppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
-            SetContentView(Resource.Layout.activity_about);
+            SetContentView(Resource.Layout.activity_license);
 
             Android.Support.V7.Widget.Toolbar toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
             SetSupportActionBar(toolbar);
-
-            FindViewById<Button>(Resource.Id.license).Click += (s, e) => StartActivity(typeof(LicenseActivity));
         }
     }
 }

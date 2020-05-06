@@ -2,6 +2,7 @@
 <resources>
     <dimen name="margin15">15dp</dimen>
     <dimen name="margin16">16dp</dimen>
+    <dimen name="margin20">20dp</dimen>
 
     <dimen name="tv_height">40dp</dimen>
     <dimen name="text_width40">40dp</dimen>

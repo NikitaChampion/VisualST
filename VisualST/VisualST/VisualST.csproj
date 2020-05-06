@@ -67,7 +67,7 @@
     <Compile Include="ST.cs" />
     <Compile Include="AboutActivity.cs" />
     <Compile Include="VisualizationActivity.cs" />
-    <Compile Include="DescriptionActivity.cs" />
+    <Compile Include="LicenseActivity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -154,19 +154,11 @@
       <SubType></SubType>
       <Generator></Generator>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\activity_description.xml">
-      <SubType></SubType>
-      <Generator></Generator>
-    </AndroidResource>
-    <AndroidResource Include="Resources\drawable\screenshot_1.png">
-      <SubType></SubType>
-      <Generator></Generator>
-    </AndroidResource>
-    <AndroidResource Include="Resources\drawable\screenshot_2.png">
-      <SubType></SubType>
-      <Generator></Generator>
-    </AndroidResource>
     <AndroidResource Include="Resources\drawable\ic_launcher_2.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\activity_license.xml">
       <SubType></SubType>
       <Generator></Generator>
     </AndroidResource>
