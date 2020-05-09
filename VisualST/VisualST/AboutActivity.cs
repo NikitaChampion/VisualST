@@ -1,11 +1,6 @@
-﻿using System;
-using Android.App;
-using Android.Content;
+﻿using Android.App;
 using Android.OS;
-using Android.Runtime;
 using Android.Support.V7.App;
-using Android.Views;
-using Android.Views.InputMethods;
 using Android.Widget;
 
 namespace VisualST

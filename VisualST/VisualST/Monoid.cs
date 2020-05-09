@@ -7,9 +7,10 @@ namespace VisualST
     /// <summary>
     /// Моноид
     /// </summary>
+    [Serializable]
     public class Monoid
     {
-        private static readonly Random rnd = new Random();
+        public static readonly Random rnd = new Random();
 
         // Отображение текста
         public event Action<string> MakeText;
@@ -18,7 +19,7 @@ namespace VisualST
         public event Func<int, int, int> Fun;
 
         // Элементы
-        private List<int> groupoid;
+        public List<int> groupoid;
 
         public bool neutralTest, associativityTest;
 
@@ -26,21 +27,17 @@ namespace VisualST
         public int neutral;
 
         // Таблица Кэли
-        private int[,] Cayley;
-
-        // Хранит значение нейтрального элемента (либо функции ST)
-        public TextView answer;
+        public int[,] Cayley;
 
         // Хранит длину группоида (моноида)
         private readonly TextView number;
 
-        public Monoid(TextView answer, TextView number)
+        public Monoid(TextView number)
         {
             Cayley = new int[0, 0];
             groupoid = new List<int>();
             neutralTest = associativityTest = false;
 
-            this.answer = answer;
             this.number = number;
         }
 
@@ -50,14 +47,7 @@ namespace VisualST
             groupoid.Clear();
             neutralTest = associativityTest = false;
 
-            answer.Text = "";
             UpdateSize();
-        }
-
-        public void ClearAnswer()
-        {
-            answer.Text = neutral.ToString();
-            answer.SetBackgroundResource(Resource.Drawable.rectangle_white);
         }
 
         public void UpdateSize() =>
@@ -208,7 +198,6 @@ namespace VisualST
                     MakeText($"Neutral element:{Environment.NewLine}{neutral}");
                     neutralTest = true;
 
-                    answer.Text = neutral.ToString();
                     return;
                 }
             }

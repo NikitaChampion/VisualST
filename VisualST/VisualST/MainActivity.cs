@@ -1,14 +1,8 @@
-﻿using System;
-using Android.App;
-using Android.Content;
+﻿using Android.App;
 using Android.OS;
-using Android.Runtime;
 using Android.Support.V7.App;
 using Android.Views;
-using Android.Views.InputMethods;
 using Android.Widget;
-
-using Z.Expressions;
 
 namespace VisualST
 {
@@ -24,7 +18,7 @@ namespace VisualST
             Android.Support.V7.Widget.Toolbar toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
             SetSupportActionBar(toolbar);
 
-            FindViewById<Button>(Resource.Id.next).Click += (s, e) => StartActivity(typeof(VisualizationActivity));
+            FindViewById<Button>(Resource.Id.next).Click += (s, e) => StartActivity(typeof(IntroActivity));
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)

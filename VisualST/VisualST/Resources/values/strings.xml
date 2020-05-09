@@ -1,12 +1,27 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Intro -->
     <string name="first_intro">Visualization of Segment Trees</string>
     <string name="app_name">VisualST</string>
     <string name="about">Welcome to VisualST! This application aims to make Segment Trees easier for programmers to understand. To continue click the button below.</string>
+
     <string name="next">Next</string>
+    <string name="back">Back</string>
+
+    
+    <string name="monoid_gen">Monoid generation</string>
+    <string name="groupoid">Groupoid</string>
+
+    <!-- Generating groupoid -->
+    <string name="elements">Elements:</string>
+
+    <string name="module">Module:</string>
+    <string name="operation">Operation:</string>
+    <string name="generating_set">Generating set:</string>
+
 
     <string name="st">Segment Tree</string>
+
 
     <string name="build">Build</string>
     <string name="run">Run</string>
@@ -17,7 +32,6 @@
     <string name="check">Check</string>
 
     <!-- Number of elements in array -->
-    <string name="elements">Elements:</string>
     <string name="array_elements">n</string>
 
     <string name="sec">1.25 sec</string>
@@ -29,14 +43,6 @@
     <string name="update">Update</string>
     <string name="i">I</string>
     <string name="x">X</string>
-
-    <!-- Generating groupoid -->
-    <string name="groupoid_elements">Number of elements in groupoid:</string>
-    <string name="generate_groupoid">Groupoid</string>
-
-    <string name="module">Module:</string>
-    <string name="operation">Operation:</string>
-    <string name="generating_set">Generating set:</string>
 
     <!-- Checks -->
     <string name="checks">Checks</string>

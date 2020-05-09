@@ -55,12 +55,16 @@ namespace VisualST
             return x + 1;
         }
 
-        public ST(int n, TextView[] txt_num, Monoid monoid, int curSpeed)
+        // Хранит значение нейтрального элемента (либо функции ST)
+        public TextView ans_;
+
+        public ST(int n, TextView[] txt_num, Monoid monoid, int curSpeed, TextView answer)
         {
             this.n = n;
             this.txt_num = txt_num;
             this.monoid = monoid;
             CurSpeed = curSpeed;
+            ans_ = answer;
 
             N = Next(n);
             numbers = new int[2 * N];
@@ -120,6 +124,12 @@ namespace VisualST
             timer_counter = 0;
         }
 
+        public void ClearAnswer()
+        {
+            ans_.Text = monoid.neutral.ToString();
+            ans_.SetBackgroundResource(Resource.Drawable.rectangle_white);
+        }
+
         public void Clear()
         {
             cleared = true;
@@ -148,7 +158,7 @@ namespace VisualST
             cleared = true;
             UpdateTextView();
             arrayT.UpdateColor();
-            monoid.ClearAnswer();
+            ClearAnswer();
 
             if (timer_counter < -1)
                 timer_counter = -1;
@@ -180,7 +190,7 @@ namespace VisualST
                     else
                     {
                         txt_num[N + i].SetBackgroundResource(Resource.Drawable.rectangle_search_1);
-                        monoid.answer.SetBackgroundResource(Resource.Drawable.rectangle_search_1);
+                        ans_.SetBackgroundResource(Resource.Drawable.rectangle_search_1);
                     }
                     return;
                 }
@@ -206,7 +216,7 @@ namespace VisualST
         private void GetAnswer(int l, int r)
         {
             UpdateColor();
-            monoid.ClearAnswer();
+            ClearAnswer();
             answer = monoid.neutral;
 
             if (timer_counter < -1)
@@ -226,9 +236,9 @@ namespace VisualST
                 if (l % 2 == 1)
                 {
                     answer = monoid.GetCayley(answer, numbers[l]);
-                    monoid.answer.Text = answer.ToString();
+                    ans_.Text = answer.ToString();
 
-                    monoid.answer.SetBackgroundResource(Resource.Drawable.rectangle_purple);
+                    ans_.SetBackgroundResource(Resource.Drawable.rectangle_purple);
                     txt_num[l].SetBackgroundResource(Resource.Drawable.rectangle_red);
                 }
                 else
@@ -237,9 +247,9 @@ namespace VisualST
                 if (r % 2 == 0)
                 {
                     answer = monoid.GetCayley(answer, numbers[r]);
-                    monoid.answer.Text = answer.ToString();
+                    ans_.Text = answer.ToString();
 
-                    monoid.answer.SetBackgroundResource(Resource.Drawable.rectangle_purple);
+                    ans_.SetBackgroundResource(Resource.Drawable.rectangle_purple);
                     txt_num[r].SetBackgroundResource(Resource.Drawable.rectangle_red);
                 }
                 else
@@ -342,7 +352,7 @@ namespace VisualST
 
             Clear();
             arrayT.UpdateColor();
-            monoid.ClearAnswer();
+            ClearAnswer();
 
             save = false;
 
@@ -367,7 +377,7 @@ namespace VisualST
 
             ClearTimer();
             UpdateColor();
-            monoid.ClearAnswer();
+            ClearAnswer();
 
             if (save)
             {
@@ -396,7 +406,7 @@ namespace VisualST
 
             ClearTimer();
             UpdateColor();
-            monoid.ClearAnswer();
+            ClearAnswer();
 
             if (!save)
             {

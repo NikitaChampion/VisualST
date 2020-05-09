@@ -27,21 +27,6 @@ namespace VisualST
         public void Generate()
         {
             UpdateColor();
-            if (monoid.Count == 0)
-            {
-                MakeText("Monoid is empty!");
-                return;
-            }
-            if (!monoid.neutralTest)
-            {
-                MakeText("Check for neutral element!");
-                return;
-            }
-            if (!monoid.associativityTest)
-            {
-                MakeText("Check for associativity!");
-                return;
-            }
             array = new int[Length];
             for (int i = 0; i < Length; ++i)
             {
