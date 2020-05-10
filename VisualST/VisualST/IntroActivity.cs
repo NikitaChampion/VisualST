@@ -76,14 +76,15 @@ namespace VisualST
         {
             ChangeDots(e.Position);
             mCurrentPage = e.Position;
-            if (e.Position == 0)
+            
+            if (mCurrentPage == 0)
             {
                 mNextBtn.Enabled = true;
                 mBackBtn.Enabled = false;
 
                 mNextBtn.Text = "Next";
             }
-            else if (e.Position == mDots.Length - 1)
+            else if (mCurrentPage == mDots.Length - 1)
             {
                 mNextBtn.Enabled = true;
                 mBackBtn.Enabled = true;
@@ -96,6 +97,36 @@ namespace VisualST
                 mBackBtn.Enabled = true;
 
                 mNextBtn.Text = "Next";
+            }
+
+            TextView edited = FindViewById<TextView>(Resource.Id.edited);
+
+            switch (mCurrentPage)
+            {
+                case 0:
+                    edited.Text = "Welcome! This is an instruction on how to use the application. Press the next button below or just flip the page to continue.";
+                    break;
+                case 1:
+                    edited.Text = "This button generates groupoid using parameteres of groupoid below. Each parameter is described in more detail later.";
+                    break;
+                case 2:
+                    edited.Text = "Module is an operation module. The default value is 10.";
+                    break;
+                case 3:
+                    edited.Text = "Operation is a function. The default value is X+Y. First parameter - X, second - Y";
+                    break;
+                case 4:
+                    edited.Text = "Generating set is set, which generates groupoid. The default value is 1. Values can be written through ', '.\nFor example, '1, 2'.";
+                    break;
+                case 5:
+                    edited.Text = "For a groupoid to be a monoid, it needs to be associative and have a neutral element in it. Press the associativity button to check groupoid for associativity.";
+                    break;
+                case 6:
+                    edited.Text = "For a groupoid to be a monoid, it needs to be associative and have a neutral element in it. Press the neutral button to check groupoid for neutral.";
+                    break;
+                case 7:
+                    edited.Text = "Press the next button when you have generated the groupoid and checked it for all properties.";
+                    break;
             }
         }
     }

@@ -9,15 +9,24 @@
 		android:id="@+id/slideViewPager"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
+		android:layout_above="@+id/edited" />
+
+    <TextView
+		android:id="@+id/edited"
+		android:layout_width="match_parent"
+		android:layout_height="180dp"
+        android:gravity="center"
+        android:paddingLeft="@dimen/margin16"
+        android:paddingRight="@dimen/margin16"
 		android:layout_above="@+id/dotsLayout" />
 
 	<LinearLayout
 		android:id="@+id/dotsLayout"
 		android:layout_width="match_parent"
 		android:layout_height="55dp"
+		android:gravity="center"
 		android:layout_alignParentBottom="true"
-		android:orientation="horizontal"
-		android:gravity="center" >
+		android:orientation="horizontal" >
 
 		<TextView
 		    android:id="@+id/mDots0"

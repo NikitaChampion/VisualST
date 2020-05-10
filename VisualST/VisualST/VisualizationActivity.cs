@@ -126,7 +126,6 @@ namespace VisualST
             answer.Text = monoid.neutral.ToString();
 
             arrayT = new ArrayT(8, arr, monoid);
-            arrayT.MakeText += ShowMessage;
 
             MyST = new ST(8, txt_num, monoid, 1250, answer);
             MyST.MakeText += ShowMessage;

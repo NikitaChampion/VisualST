@@ -13,8 +13,6 @@ namespace VisualST
 
         private readonly Monoid monoid;
 
-        public event Action<string> MakeText;
-
         public ArrayT(int length, TextView[] arr, Monoid monoid)
         {
             Length = length;
