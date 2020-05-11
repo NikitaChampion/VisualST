@@ -57,6 +57,10 @@
     <!-- About VisualST -->
     <string name="action_about">About VisualST</string>
     <string name="about_">About VisualST</string>
+    <string name="version">VisualST 1.1.0</string>
+    <string name="copyright">Copyright © 2020</string>
+    <string name="my_name">Nikita Igumnov, student of HSE</string>
+    <string name="email">nkigumnov@hse.ru</string>
 
     <!-- License -->
     <string name="license">License</string>

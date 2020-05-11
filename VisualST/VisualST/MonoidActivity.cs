@@ -247,6 +247,11 @@ namespace VisualST
         private void NeutralCheck(object sender, EventArgs e) =>
             Disable(sender, () => monoid.NeutralCheck());
 
+        /// <summary>
+        /// Переход в следующее окно (визуализации)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void StartActivity(object sender, EventArgs e)
         {
             if (monoid.Count == 0)

@@ -437,7 +437,7 @@ namespace VisualST
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Update(object sender, EventArgs e) // update
+        private void Update(object sender, EventArgs e)
         {
             if (position == null)
             {

@@ -4,33 +4,51 @@ using Android.Widget;
 
 namespace VisualST
 {
+    /// <summary>
+    /// Дерево отрезков
+    /// </summary>
     public class ST
     {
-        private int n; // длина массива
+        // Отображение текста
+        public event Action<string> MakeText;
 
-        public int N { get; private set; } // следующая степень двойки n
+        // Длина массива
+        private int n;
 
-        private int[] numbers; // массив ДО
+        // Длина массива ДО/2
+        public int N { get; private set; }
 
-        private int[] saved; // сохранённый массив
+        // Массив ДО
+        private int[] numbers;
 
-        private readonly TextView[] txt_num; // TextView[]
+        // Сохранённый массив
+        private int[] saved;
 
-        private readonly Monoid monoid; // моноид, функция ДО
+        private readonly TextView[] txt_num;
 
-        public event Action<string> MakeText; // отображение текста
+        // Хранит значение нейтрального элемента (либо функции ST)
+        private readonly TextView ans_;
 
-        private Timer timer; // таймер для отображения действий
+        // Моноид (функция ДО)
+        private readonly Monoid monoid;
 
-        private Action TimerAction; // метод timer-а (для кнопок Previous / Next)
+        // Таймер для отображения действий
+        private Timer timer;
 
-        private int timer_counter; // текущее действие таймера
+        // Метод timer-а (для кнопок Previous / Next)
+        private Action TimerAction;
 
-        private bool cleared; // очищен ли TextView[]
+        // Текущее действие таймера
+        private int timer_counter;
 
-        private int answer; // ответ на отрезке
+        // Очищен ли TextView[]
+        private bool cleared;
 
-        private bool save; // нужно ли присваивать текущему массиву сохранённый
+        // Ответ на отрезке
+        private int answer;
+
+        // Нужно ли присваивать текущему массиву сохранённый
+        private bool save;
 
         private int curSpeed;
         private int CurSpeed // скорость анимации
@@ -44,7 +62,12 @@ namespace VisualST
             }
         }
 
-        private int Next(int x) // следующая степень двойки, O(log(log(x)))
+        /// <summary>
+        /// Следующая степень двойки, O(log(log(x)))
+        /// </summary>
+        /// <param name="x"> Число </param>
+        /// <returns> Следующая степень двойки x </returns>
+        private int Next(int x)
         {
             --x;
             x |= x >> 1;
@@ -54,9 +77,6 @@ namespace VisualST
             x |= x >> 16;
             return x + 1;
         }
-
-        // Хранит значение нейтрального элемента (либо функции ST)
-        public TextView ans_;
 
         public ST(int n, TextView[] txt_num, Monoid monoid, int curSpeed, TextView answer)
         {

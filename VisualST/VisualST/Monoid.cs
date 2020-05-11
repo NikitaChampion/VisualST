@@ -21,6 +21,7 @@ namespace VisualST
         // Элементы
         public List<int> groupoid;
 
+        // Проверки на нейтральный / ассоциативность
         public bool neutralTest, associativityTest;
 
         // Нейтральный элемент
@@ -61,6 +62,11 @@ namespace VisualST
 
         public bool Contains(int x) => groupoid.Contains(x);
 
+        /// <summary>
+        /// Генерация группоида
+        /// </summary>
+        /// <param name="generating_set"> Порождающее множество </param>
+        /// <param name="p"> Модуль операции </param>
         public void Generate(int[] generating_set, int p)
         {
             groupoid = new List<int>();

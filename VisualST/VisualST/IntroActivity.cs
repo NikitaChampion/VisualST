@@ -10,7 +10,6 @@ namespace VisualST
     public class IntroActivity : AppCompatActivity
     {
         private ViewPager mSlideViewPager;
-        private LinearLayout mDotLayout;
 
         private TextView[] mDots;
 
@@ -28,7 +27,6 @@ namespace VisualST
             SetContentView(Resource.Layout.activity_intro);
 
             mSlideViewPager = FindViewById<ViewPager>(Resource.Id.slideViewPager);
-            mDotLayout = FindViewById<LinearLayout>(Resource.Id.dotsLayout);
 
             mDots = new TextView[8];
             mDots[0] = FindViewById<TextView>(Resource.Id.mDots0);
@@ -52,15 +50,18 @@ namespace VisualST
             mNextBtn.Click += (s, e) =>
             {
                 if (mCurrentPage == mDots.Length - 1)
-                    StartActivity(typeof(MonoidActivity));
+                    StartActivity(typeof(MonoidActivity)); // переход в следующее окно
                 else
-                    mSlideViewPager.SetCurrentItem(mCurrentPage + 1, true);
+                    mSlideViewPager.SetCurrentItem(mCurrentPage + 1, true); // переход на следующую страницу
             };
 
-            mBackBtn.Click += (s, e) => mSlideViewPager.SetCurrentItem(mCurrentPage - 1, true);
+            mBackBtn.Click += (s, e) => mSlideViewPager.SetCurrentItem(mCurrentPage - 1, true); // переход на предыдущую страницу
         }
 
-
+        /// <summary>
+        /// Изменение кружков
+        /// </summary>
+        /// <param name="id"> Номер кружка, который нужно выделить </param>
         private void ChangeDots(int id)
         {
             for (int i = 0; i < mDots.Length; ++i)
@@ -72,6 +73,11 @@ namespace VisualST
             }
         }
 
+        /// <summary>
+        /// Изменение страницы
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Changed(object sender, ViewPager.PageScrolledEventArgs e)
         {
             ChangeDots(e.Position);

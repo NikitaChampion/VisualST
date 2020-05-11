@@ -29,7 +29,7 @@
 				android:textSize="@dimen/text_size_norm" />
             
             <ImageView
-				android:contentDescription="Segment tree"
+				android:contentDescription="@string/st"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:layout_marginTop="5dp"
@@ -42,7 +42,7 @@
 				android:layout_height="wrap_content"
 				android:layout_marginTop="5dp"
 				android:gravity="center"
-				android:text="VisualST 1.1.0"
+				android:text="@string/version"
                 android:textStyle="bold"
 				android:textColor="@android:color/black"
 				android:textSize="@dimen/text_size_big" />
@@ -54,7 +54,7 @@
 				android:layout_marginLeft="@dimen/margin15"
 				android:layout_marginRight="@dimen/margin15"
 				android:gravity="center"
-				android:text="Copyright © 2020"
+				android:text="@string/copyright"
 				android:textColor="@android:color/black"
 				android:textSize="@dimen/text_size" />
 
@@ -65,7 +65,7 @@
 				android:layout_marginLeft="@dimen/margin15"
 				android:layout_marginRight="@dimen/margin15"
 				android:gravity="center"
-				android:text="Nikita Igumnov, student of HSE"
+				android:text="@string/my_name"
 				android:textColor="@android:color/black"
 				android:textSize="16sp" />
             
@@ -76,8 +76,8 @@
 				android:layout_marginLeft="@dimen/margin15"
 				android:layout_marginRight="@dimen/margin15"
 				android:gravity="center"
-				android:text="@nkigumnov – tg, inst, vk"
-				android:textColor="@android:color/black"
+				android:text="@string/email"
+				android:textColor="@color/material_grey_800"
 				android:textSize="16sp" />
 
             <LinearLayout
