@@ -214,7 +214,7 @@ namespace VisualST
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="action"></param>
-        public void Disable(object sender, Action action)
+        private void Disable(object sender, Action action)
         {
             ((Button)sender).Enabled = false;
 

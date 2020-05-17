@@ -14,9 +14,6 @@ namespace VisualST
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar")]
     public class VisualizationActivity : AppCompatActivity
     {
-        // Моноид
-        Monoid monoid;
-
         // Массив
         ArrayT arrayT;
 
@@ -119,7 +116,7 @@ namespace VisualST
             p = Intent.Extras.GetInt("p");
             generating_set = JsonConvert.DeserializeObject<int[]>(Intent.GetStringExtra("generating_set"));
 
-            monoid = JsonConvert.DeserializeObject<Monoid>(Intent.GetStringExtra("monoid"));
+            Monoid monoid = JsonConvert.DeserializeObject<Monoid>(Intent.GetStringExtra("monoid"));
 
             // Хранит значение нейтрального элемента (либо функции ST)
             TextView answer = FindViewById<TextView>(Resource.Id.answer);

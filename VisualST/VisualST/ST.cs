@@ -26,7 +26,7 @@ namespace VisualST
 
         private readonly TextView[] txt_num;
 
-        // Хранит значение нейтрального элемента (либо функции ST)
+        // Хранит значение нейтрального элемента (либо ответа на запрос ST)
         private readonly TextView ans_;
 
         // Моноид (функция ДО)
